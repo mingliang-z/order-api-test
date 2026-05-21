@@ -1,0 +1,68 @@
+{
+  "create_order_success": [
+    {
+      "customer_name": "张三",
+      "items": [
+        {
+          "product_name": "iPhone 15",
+          "quantity": 1,
+          "unit_price": 5999.00
+        }
+      ],
+      "expected_total_price": 5999.00
+    },
+    {
+      "customer_name": "里斯",
+      "items": [
+        {
+          "product_name": "iPhone 15",
+          "quantity": 1,
+          "unit_price": 5999.00
+        },
+        {
+          "product_name": "xiaomi 17",
+          "quantity": 1,
+          "unit_price": 4999.00
+        }
+      ],
+      "expected_total_price": 10998.00
+    }
+  ],
+  "create_order_missing_fields": [
+    {
+      "customer_name": "",
+      "items": [
+        {
+          "product_name": "yijia X3",
+          "quantity": 1,
+          "unit_price": 2699.00
+        }
+      ]
+    },
+    {
+      "customer_name": "wangwu",
+      "items": []
+    },
+    {
+      "customer_name": "zhaoliu",
+      "items": [
+        {
+          "product_name": "vivo Y4",
+          "quantity": 0,
+          "unit_price": 2799.00
+        }
+      ]
+    },
+    {
+      "customer_name": "zhuqi",
+      "items": [
+        {
+          "product_name": "meizu Q5",
+          "quantity": 1,
+          "unit_price": 2799.00
+        }
+      ],
+      "remark": "今年，我在姑姑家度暑假。姑姑这几年生活好了，粮食也多了，可老鼠也多起来了。一到晚上就吱吱的叫个不停。有一天，哥哥提议去打老鼠，我进取响应。老鼠躲在稻囤的夹缝里，我和哥哥用棍子在两边使劲地捣。一会儿，老鼠钻出来了。我们急忙用笤帚打。哥哥打中了一只，它立刻就去见阎王爷了。我因为是第一次，并且自我是属老鼠的，所以让老鼠溜掉了，它躲在粮食袋的后面，我吸取上次的教训，抡起棍了就打，结果打到了老鼠的尾巴，它一挣扎，一头撞在了墙了，倒在地下一动不动了。哥哥哈哈大笑起来：“哈，它明白熬可是今日，就撞墙自杀了\"。我也大笑起来。　今日我们算是“为民除害\"，也算是一种考验吧。"
+    }
+  ]
+}

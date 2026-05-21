@@ -1,0 +1,67 @@
+name: API Tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: '0 * * * *'
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 安装 Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: 安装依赖
+        run: |
+          pip install fastapi uvicorn requests pytest allure-pytest pytest-rerunfailures
+          wget -q https://github.com/allure-framework/allure2/releases/download/2.30.0/allure-2.30.0.tgz
+          tar -xzf allure-2.30.0.tgz
+          sudo ln -s $(pwd)/allure-2.30.0/bin/allure /usr/local/bin/allure
+
+      - name: 启动 FastAPI 服务
+        run: |
+          nohup python run.py &
+          sleep 3
+
+      - name: 运行测试
+        run: |
+          pytest testcases/ -v --reruns 2 --reruns-delay 1 --alluredir=allure-results
+
+      - name: 生成 Allure 报告
+        if: always()
+        run: |
+          allure generate allure-results -o allure-report --clean
+
+      - name: 上传 Allure 报告
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-report
+          path: allure-report
+
+      - name: 发送邮件通知
+        if: always()
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.qq.com
+          server_port: 465
+          username: ${{ secrets.MAIL_USER }}
+          password: ${{ secrets.MAIL_PASS }}
+          subject: "测试报告 - ${{ github.repository }}"
+          body: |
+            仓库: ${{ github.repository }}
+            分支: ${{ github.ref_name }}
+            运行状态: ${{ job.status }}
+          to: ${{ secrets.MAIL_TO }}
+          from: ${{ secrets.MAIL_USER }}
