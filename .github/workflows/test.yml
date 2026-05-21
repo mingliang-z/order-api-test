@@ -43,12 +43,15 @@ jobs:
         run: |
           allure generate allure-results -o allure-report --clean
 
-      - name: 上传 Allure 报告
+      - name: 部署报告到 Netlify
         if: always()
-        uses: actions/upload-artifact@v4
+        uses: nwtgck/actions-netlify@v2
         with:
-          name: allure-report
-          path: allure-report
+          publish-dir: ./allure-report
+          production-deploy: true
+        env:
+          NETLIFY_AUTH_TOKEN: ${{ secrets.NETLIFY_AUTH_TOKEN }}
+          NETLIFY_SITE_ID: ${{ secrets.NETLIFY_SITE_ID }}
 
       - name: 发送邮件通知
         if: always()
