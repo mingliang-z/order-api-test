@@ -52,16 +52,11 @@ jobs:
 
       - name: 发送邮件通知
         if: always()
-        uses: cinotify/github-action-send-mail@v1
-        with:
-          server_address: smtp.qq.com
-          server_port: 465
-          username: tester.mingliang@qq.com
-          password: ${{ secrets.MAIL_PASS }}
-          subject: "测试报告 - ${{ github.repository }}"
-          body: |
-            仓库: ${{ github.repository }}
-            分支: ${{ github.ref_name }}
-            运行状态: ${{ job.status }}
-          to: tester.mingliang@qq.com
-          from: tester.mingliang@qq.com
+        env:
+          MAIL_USER: tester.mingliang@qq.com
+          MAIL_PASS: ${{ secrets.MAIL_PASS }}
+          MAIL_TO: tester.mingliang@qq.com
+          GITHUB_REPOSITORY: ${{ github.repository }}
+          GITHUB_REF_NAME: ${{ github.ref_name }}
+          JOB_STATUS: ${{ job.status }}
+        run: python send_mail.py
