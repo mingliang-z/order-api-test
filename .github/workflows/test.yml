@@ -52,7 +52,7 @@ jobs:
 
       - name: 发送邮件通知
         if: always()
-        uses: dawidd6/action-send-mail@v3
+        uses: cinotify/github-action-send-mail@v1
         with:
           server_address: smtp.qq.com
           server_port: 465
