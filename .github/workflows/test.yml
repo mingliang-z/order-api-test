@@ -64,4 +64,3 @@ jobs:
             分支: ${{ github.ref_name }}
             运行状态: ${{ job.status }}
           to: ${{ secrets.MAIL_TO }}
-          from: ${{ secrets.MAIL_USER }}
